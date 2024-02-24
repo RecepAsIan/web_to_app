@@ -1,10 +1,11 @@
+import 'dart:html';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_to_app/feature/payment/payment_riverpod.dart';
 import 'package:web_to_app/product/utility/padding.dart';
 import 'package:web_to_app/product/widgets/my_payment_textfield.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:html';
 
 final _paymentProvider =
     StateNotifierProvider<PaymentNotifier, PaymentView>((ref) {
@@ -56,34 +57,42 @@ class _PaymentViewState extends ConsumerState<PaymentView> {
                                 ref.watch(_paymentProvider.notifier).appName,
                             text: 'AppName'),
                       ),
-                      Padding(
-                        padding: AppPadding.topLowPadding +
-                            AppPadding.leftLowPadding,
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              FileUploadInputElement uploadInput =
-                                  FileUploadInputElement();
-                              uploadInput.click();
+                      Row(
+                        children: [
+                          Padding(
+                            padding: AppPadding.topLowPadding +
+                                AppPadding.leftLowPadding,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  FileUploadInputElement uploadInput =
+                                      FileUploadInputElement();
+                                  uploadInput.click();
 
-                              uploadInput.onChange.listen((e) {
-                                final userFile = uploadInput.files!.first;
-                                final reader = FileReader();
+                                  uploadInput.onChange.listen((e) {
+                                    final userFile = uploadInput.files!.first;
+                                    final reader = FileReader();
 
-                                reader.onLoadEnd.listen((e) {
-                                  setState(() {
-                                    _imageSrc = reader.result as String;
-                                    _image = userFile;
+                                    reader.onLoadEnd.listen((e) {
+                                      setState(() {
+                                        _imageSrc = reader.result as String;
+                                        _image = userFile;
+                                      });
+                                    });
+
+                                    reader.readAsDataUrl(userFile);
                                   });
-                                });
-
-                                reader.readAsDataUrl(userFile);
-                              });
-                            },
-                            child: const Text('add image'),
+                                },
+                                child: const Text('add image'),
+                              ),
+                            ),
                           ),
-                        ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: const Text('Payment '),
+                          )
+                        ],
                       ),
                       const Padding(
                         padding: AppPadding.topLowPadding,
@@ -167,7 +176,7 @@ class _PaymentViewState extends ConsumerState<PaymentView> {
                             height: 500,
                           ),
                         ),
-                        Align(
+                        const Align(
                           alignment: Alignment.topCenter,
                           child: Padding(
                             padding: AppPadding.topLowPadding,

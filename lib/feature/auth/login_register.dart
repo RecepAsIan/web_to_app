@@ -10,7 +10,8 @@ class LoginRegisterView extends StatefulWidget {
   State<LoginRegisterView> createState() => _LoginRegisterViewState();
 }
 
-class _LoginRegisterViewState extends State<LoginRegisterView> with LoginRegisterMixin {
+class _LoginRegisterViewState extends State<LoginRegisterView>
+    with LoginRegisterMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,10 +46,10 @@ class _LoginRegisterViewState extends State<LoginRegisterView> with LoginRegiste
               Padding(
                 padding: AppPadding.topLowPadding,
                 child: ElevatedButton(
-                  onPressed: () async{
+                  onPressed: () async {
                     loginOrRegister
-                        ?  userLogin(email: email.text, password: password.text)
-                        :  userRegister(
+                        ? userLogin(email: email.text, password: password.text)
+                        : userRegister(
                             email: email.text,
                             password: password.text,
                             confirmPassword: confirmPassword.text);

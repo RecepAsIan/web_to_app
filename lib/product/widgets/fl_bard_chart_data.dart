@@ -20,60 +20,41 @@ class FlBardChartData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.pink,
-      height: 200,
-      width: 400,
-      child: Column(
-        children: [
-          const Expanded(
-              child: SizedBox(
-            child: Text(
-              'Bar Chart Example',
-              style: TextStyle(fontSize: 24),
-            ),
-          )),
-          SizedBox(
-            height: 100,
-            width: 400,
-            child: BarChart(
-              BarChartData(
-                borderData: FlBorderData(show: false),
-                titlesData: const FlTitlesData(show: false),
-                gridData: const FlGridData(show: false),
-                barGroups: [
-                  BarChartGroupData(x: 0, barRods: [
-                    BarChartRodData(
-                        toY: y1, color: Colors.white.withOpacity(0.5))
-                  ]),
-                  BarChartGroupData(x: 1, barRods: [
-                    BarChartRodData(
-                        toY: y2, color: Colors.white.withOpacity(0.5))
-                  ]),
-                  BarChartGroupData(x: 2, barRods: [
-                    BarChartRodData(
-                        toY: y3, color: Colors.white.withOpacity(0.5))
-                  ]),
-                  BarChartGroupData(x: 3, barRods: [
-                    BarChartRodData(
-                        toY: y4, color: Colors.white.withOpacity(0.5))
-                  ]),
-                  BarChartGroupData(x: 4, barRods: [
-                    BarChartRodData(
-                        toY: y5, color: Colors.white.withOpacity(0.5))
-                  ]),
-                  BarChartGroupData(
-                    x: 5,
-                    barRods: [
-                      BarChartRodData(
-                          toY: y6, color: Colors.white.withOpacity(0.5))
-                    ],
-                  ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 30),
+      child: SizedBox(
+        height: 60,
+        width: 290,
+        child: BarChart(
+          BarChartData(
+            borderData: FlBorderData(show: false),
+            titlesData: const FlTitlesData(show: false),
+            gridData: const FlGridData(show: false),
+            barGroups: [
+              BarChartGroupData(x: 0, barRods: [
+                BarChartRodData(toY: y1, color: Colors.white.withOpacity(0.5))
+              ]),
+              BarChartGroupData(x: 1, barRods: [
+                BarChartRodData(toY: y2, color: Colors.white.withOpacity(0.5))
+              ]),
+              BarChartGroupData(x: 2, barRods: [
+                BarChartRodData(toY: y3, color: Colors.white.withOpacity(0.5))
+              ]),
+              BarChartGroupData(x: 3, barRods: [
+                BarChartRodData(toY: y4, color: Colors.white.withOpacity(0.5))
+              ]),
+              BarChartGroupData(x: 4, barRods: [
+                BarChartRodData(toY: y5, color: Colors.white.withOpacity(0.5))
+              ]),
+              BarChartGroupData(
+                x: 5,
+                barRods: [
+                  BarChartRodData(toY: y6, color: Colors.white.withOpacity(0.5))
                 ],
               ),
-            ),
-          )
-        ],
+            ],
+          ),
+        ),
       ),
     );
   }

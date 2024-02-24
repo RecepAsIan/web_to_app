@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 class AppPadding {
   const AppPadding._();
 
-  ///horizontal: 200
+  ///horizontal: 300
   static const pageNormalPadding = EdgeInsets.symmetric(horizontal: 300);
+  ///horizontal: 300
+  static const pageLowLeftPadding = EdgeInsets.only(left: 200);
+
 
   ///horizontal: 600
   static const pageHighPadding = EdgeInsets.symmetric(horizontal: 600);

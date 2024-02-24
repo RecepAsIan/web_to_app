@@ -28,100 +28,62 @@ class FlLinerChartData extends StatelessWidget {
   final double y5;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.all(
-          Radius.circular(5),
-        ),
-      ),
-      height: 200,
-      width: 400,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '26k',
-                    style: TextStyle(fontSize: 24),
-                  ),
-                  Padding(
-                    padding: AppPadding.leftLowPadding,
-                    child: Text(
-                      '(-12.4% ↓)',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 40, right: 10,bottom: 10),
-            child: SizedBox(
-              height: 60,
-              width: 390,
-              child: ap.LineChart(
-                ap.LineChartData(
-                  gridData: ap.FlGridData(show: false),
-                  titlesData: ap.FlTitlesData(show: false),
-                  borderData: ap.FlBorderData(show: false),
-                  lineTouchData: ap.LineTouchData(
-                    touchTooltipData: ap.LineTouchTooltipData(
-                      getTooltipItems: (List<ap.LineBarSpot> touchedBarSpots) {
-                        return touchedBarSpots.map((barSpot) {
-                          final flSpot = barSpot;
-                          return ap.LineTooltipItem(
-                            'My Info : ${flSpot.y.toString()}',
-                            const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontSize: 14,
-                            ),
-                          );
-                        }).toList();
-                      },
-                    ),
-                  ),
-                  lineBarsData: [
-                    ap.LineChartBarData(
-                      spots: [
-                        ap.FlSpot(x1, y1),
-                        ap.FlSpot(x2, y2),
-                        ap.FlSpot(x3, y3),
-                        ap.FlSpot(x4, y4),
-                        ap.FlSpot(x5, y5),
-                      ],
-                      isCurved: true,
-                      color: Colors.white,
-                      barWidth: 1,
-                      isStrokeCapRound: true,
-                      dotData: ap.FlDotData(
-                        show: true,
-                        getDotPainter: (spot, percent, barData, index) =>
-                            ap.FlDotCirclePainter(
-                          radius: 3, // adjust size as needed
-                          color: Colors.transparent, // makes the dot "hollow"
-                          strokeColor: Colors.white, // color of the border
-                          strokeWidth:
-                              2, // thickness of the border color of the border
-                        ),
+    return Padding(
+      padding: EdgeInsets.only(left: 40, right: 10, bottom: 30),
+      child: SizedBox(
+        height: 60,
+        width: 290,
+        child: ap.LineChart(
+          ap.LineChartData(
+            gridData: ap.FlGridData(show: false),
+            titlesData: ap.FlTitlesData(show: false),
+            borderData: ap.FlBorderData(show: false),
+            lineTouchData: ap.LineTouchData(
+              touchTooltipData: ap.LineTouchTooltipData(
+                getTooltipItems: (List<ap.LineBarSpot> touchedBarSpots) {
+                  return touchedBarSpots.map((barSpot) {
+                    final flSpot = barSpot;
+                    return ap.LineTooltipItem(
+                      'My Info : ${flSpot.y.toString()}',
+                      const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 14,
                       ),
-                      belowBarData: ap.BarAreaData(show: false),
-                    )
-                  ],
-                ),
+                    );
+                  }).toList();
+                },
               ),
             ),
+            lineBarsData: [
+              ap.LineChartBarData(
+                spots: [
+                  ap.FlSpot(x1, y1),
+                  ap.FlSpot(x2, y2),
+                  ap.FlSpot(x3, y3),
+                  ap.FlSpot(x4, y4),
+                  ap.FlSpot(x5, y5),
+                ],
+                isCurved: true,
+                color: Colors.white,
+                barWidth: 1,
+                isStrokeCapRound: true,
+                dotData: ap.FlDotData(
+                  show: true,
+                  getDotPainter: (spot, percent, barData, index) =>
+                      ap.FlDotCirclePainter(
+                    radius: 3, // adjust size as needed
+                    color: Colors.transparent, // makes the dot "hollow"
+                    strokeColor: Colors.white, // color of the border
+                    strokeWidth:
+                        2, // thickness of the border color of the border
+                  ),
+                ),
+                belowBarData: ap.BarAreaData(show: false),
+              )
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

@@ -11,4 +11,8 @@ class MyString {
   static const yourWebSiteUrl = 'Your Website URL';
   static const email = 'Please Enter Your Email';
   static const password = 'Please Enter Your Password';
+
+  ///htpp 1
+  static const stripeUrl =
+      'https://us-central1-web-to-app-f77bb.cloudfunctions.net/stripePaymentIntentRequest';
 }
