@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:web_to_app/feature/auth/login_register_mixin.dart';
+import 'package:web_to_app/product/constants/color_constants.dart';
 import 'package:web_to_app/product/constants/string_constants.dart';
 import 'package:web_to_app/product/utility/padding.dart';
-import 'package:web_to_app/product/widgets/text_field.dart';
+import 'package:web_to_app/product/widgets/text/home_text_high.dart';
+import 'package:web_to_app/product/widgets/textfield/text_field.dart';
 
 class LoginRegisterView extends StatefulWidget {
   const LoginRegisterView({super.key});
@@ -15,18 +17,37 @@ class _LoginRegisterViewState extends State<LoginRegisterView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
       body: Center(
         child: Padding(
           padding: AppPadding.pageHighPadding,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              MyTextField(
-                controller: email,
-                text: MyString.email,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    height: 100,
+                    //image will come here
+                    child: Placeholder(),
+                  ),
+                  Padding(
+                    padding: AppPadding.leftNormalPadding,
+                    child: HomeTextHigh(
+                      text: 'Website to App',
+                      fountSize: 40,
+                      color: MyColor.paymentButton,
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: AppPadding.topNormalPadding,
+                child: MyTextField(
+                  controller: email,
+                  text: MyString.email,
+                ),
               ),
               Padding(
                 padding: AppPadding.topLowPadding,
@@ -46,6 +67,9 @@ class _LoginRegisterViewState extends State<LoginRegisterView>
               Padding(
                 padding: AppPadding.topLowPadding,
                 child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(MyColor.paymentButton)),
                   onPressed: () async {
                     loginOrRegister
                         ? userLogin(email: email.text, password: password.text)
@@ -57,8 +81,14 @@ class _LoginRegisterViewState extends State<LoginRegisterView>
                   child: Padding(
                     padding: AppPadding.allLowPadding,
                     child: loginOrRegister
-                        ? const Text('login')
-                        : const Text('register'),
+                        ? const Text(
+                            'login',
+                            style: TextStyle(color: MyColor.paymentButtonText),
+                          )
+                        : const Text(
+                            'register',
+                            style: TextStyle(color: MyColor.paymentButtonText),
+                          ),
                   ),
                 ),
               ),
@@ -71,12 +101,23 @@ class _LoginRegisterViewState extends State<LoginRegisterView>
                         ? const Text('Have you not registered yet?')
                         : const Text('Do you have a registered account?'),
                     TextButton(
-                        onPressed: () {
-                          setStateLogin();
-                        },
-                        child: loginOrRegister
-                            ? const Text('Register now')
-                            : const Text('Log in now.'))
+                      onPressed: () {
+                        setStateLogin();
+                      },
+                      child: loginOrRegister
+                          ? const Text(
+                              'Register now',
+                              style: TextStyle(
+                                color: MyColor.paymentButton,
+                              ),
+                            )
+                          : const Text(
+                              'Log in now.',
+                              style: TextStyle(
+                                color: MyColor.paymentButton,
+                              ),
+                            ),
+                    )
                   ],
                 ),
               )

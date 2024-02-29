@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_to_app/feature/payment/payment_riverpod.dart';
+import 'package:web_to_app/product/constants/color_constants.dart';
+import 'package:web_to_app/product/constants/string_constants.dart';
 import 'package:web_to_app/product/utility/padding.dart';
-import 'package:web_to_app/product/widgets/my_payment_textfield.dart';
+import 'package:web_to_app/product/widgets/payment_button.dart';
+import 'package:web_to_app/product/widgets/paymnet_price_tablo.dart';
+import 'package:web_to_app/product/widgets/text/home_text_high.dart';
+import 'package:web_to_app/product/widgets/textfield/my_payment_textfield.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 final _paymentProvider =
@@ -21,16 +26,18 @@ class PaymentView extends ConsumerStatefulWidget {
 
 class _PaymentViewState extends ConsumerState<PaymentView> {
   late File _image;
-  late String _imageSrc =
-      'https://firebasestorage.googleapis.com/v0/b/web-to-app-f77bb.appspot.com/o/AppIcon%2Fpngegg.png?alt=media&token=bc0278d0-b8dc-4dc9-b66e-a3a2b77b08a9';
-  late String _url;
+  late String url;
+  String appName = 'AppName';
+  String _imageSrc = MyString.loginIcon;
   @override
   Widget build(BuildContext context) {
+    bool imageLoading = _imageSrc == MyString.loginIcon;
+
     return Scaffold(
       backgroundColor: Colors.blue,
       body: Center(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
             color: Colors.white,
           ),
@@ -43,9 +50,35 @@ class _PaymentViewState extends ConsumerState<PaymentView> {
                 child: SizedBox(
                   child: Column(
                     children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsets.only(top: 20, bottom: 15, left: 15),
+                            child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              //image will come here
+                              child: Placeholder(),
+                            ),
+                          ),
+                          Padding(
+                            padding: AppPadding.leftNormalPadding,
+                            child: HomeTextHigh(
+                              text: 'Website to App',
+                              fountSize: 40,
+                              color: MyColor.paymentButton,
+                            ),
+                          )
+                        ],
+                      ),
                       Padding(
-                        padding: AppPadding.textFieldPadding,
+                        padding: //AppPadding.topPageNormalPadding +
+                            AppPadding.textFieldHorizontalPadding,
                         child: MyPaymentTextField(
+                            onChanged: (value) {},
                             controller:
                                 ref.watch(_paymentProvider.notifier).url,
                             text: 'url'),
@@ -53,6 +86,11 @@ class _PaymentViewState extends ConsumerState<PaymentView> {
                       Padding(
                         padding: AppPadding.textFieldPadding,
                         child: MyPaymentTextField(
+                            onChanged: (value) {
+                              setState(() {
+                                appName = value;
+                              });
+                            },
                             controller:
                                 ref.watch(_paymentProvider.notifier).appName,
                             text: 'AppName'),
@@ -64,7 +102,7 @@ class _PaymentViewState extends ConsumerState<PaymentView> {
                                 AppPadding.leftLowPadding,
                             child: Align(
                               alignment: Alignment.centerLeft,
-                              child: ElevatedButton(
+                              child: PaymentButton(
                                 onPressed: () async {
                                   FileUploadInputElement uploadInput =
                                       FileUploadInputElement();
@@ -84,57 +122,61 @@ class _PaymentViewState extends ConsumerState<PaymentView> {
                                     reader.readAsDataUrl(userFile);
                                   });
                                 },
-                                child: const Text('add image'),
+                                text: 'add image',
                               ),
                             ),
                           ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: const Text('Payment '),
-                          )
                         ],
                       ),
-                      const Padding(
+                      Padding(
                         padding: AppPadding.topLowPadding,
                         child: Row(
                           children: [
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: AppPadding.leftLowPadding,
-                                child: SizedBox(
-                                  height: 300,
-                                  child: Text('android'),
-                                ),
-                              ),
+                            PaymentPriceTable(
+                                iconBool:
+                                    ref.read(_paymentProvider.notifier).android,
+                                onTap: () {
+                                  setState(() {
+                                    ref
+                                        .read(_paymentProvider.notifier)
+                                        .androidButton();
+                                  });
+                                },
+                                textOne: 'Android ',
+                                textThree: MyString.androidPrice),
+                            PaymentPriceTable(
+                              iconBool: ref
+                                  .watch(_paymentProvider.notifier)
+                                  .androidAndIphone,
+                              onTap: () {
+                                setState(() {
+                                  ref
+                                      .read(_paymentProvider.notifier)
+                                      .androidAndIphoneButton();
+                                });
+                              },
+                              textOne: 'Android\n&Iphone',
+                              textThree: MyString.androidAndIosPrice,
                             ),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: AppPadding.leftLowPadding,
-                                child: SizedBox(
-                                  height: 300,
-                                  child: Text('iphone'),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: AppPadding.leftLowPadding,
-                                child: SizedBox(
-                                  height: 300,
-                                  child: Text('android and iphone'),
-                                ),
-                              ),
-                            ),
+                            PaymentPriceTable(
+                                iconBool:
+                                    ref.watch(_paymentProvider.notifier).iphone,
+                                onTap: () {
+                                  setState(() {
+                                    ref
+                                        .read(_paymentProvider.notifier)
+                                        .iphoneButton();
+                                  });
+                                },
+                                textOne: 'Iphone',
+                                textThree: MyString.iphonePrice),
                           ],
                         ),
                       ),
                       Padding(
                         padding: AppPadding.topLowPadding +
                             AppPadding.leftLowPadding,
-                        child: ElevatedButton(
+                        child: PaymentButton(
                           onPressed: () async {
                             final filePath = 'my_path/${DateTime.now()}.png';
                             final storageRef =
@@ -142,10 +184,10 @@ class _PaymentViewState extends ConsumerState<PaymentView> {
                             final uploadTask = storageRef.putBlob(_image);
 
                             await uploadTask.whenComplete(() async {
-                              _url = await storageRef.getDownloadURL();
+                              url = await storageRef.getDownloadURL();
                             });
                           },
-                          child: const Text('Buy'),
+                          text: 'Buy',
                         ),
                       ),
                     ],
@@ -155,41 +197,54 @@ class _PaymentViewState extends ConsumerState<PaymentView> {
               Expanded(
                 flex: 2,
                 child: SizedBox(
-                    child: Center(
-                  child: Container(
-                    width: 250,
-                    height: 500,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                    ),
-                    child: Stack(
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: Image.network(
-                            _imageSrc,
-                            fit: BoxFit.fill,
-                            width: 250,
-                            height: 500,
-                          ),
-                        ),
-                        const Align(
-                          alignment: Alignment.topCenter,
-                          child: Padding(
-                            padding: AppPadding.topLowPadding,
-                            child: Text(
-                              'AppName',
-                              style: TextStyle(color: Colors.blue),
+                  child: Center(
+                    child: SizedBox(
+                      width: 250,
+                      height: 500,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Padding(
+                            padding: AppPadding.leftLowPadding,
+                            child: Image.network(
+                              MyString.paymentPhone,
+                              width: 250,
+                              height: 500,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        ),
-                      ],
+                          Align(
+                            alignment: Alignment.center,
+                            child: imageLoading
+                                ? SizedBox(
+                                    width: 150,
+                                    height: 150,
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                : Image.network(
+                                    _imageSrc,
+                                    fit: BoxFit.fill,
+                                    width: 150,
+                                    height: 150,
+                                  ),
+                          ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 80),
+                              child: Text(
+                                appName.isEmpty ? 'AppName' : appName,
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                )),
+                ),
               ),
             ],
           ),

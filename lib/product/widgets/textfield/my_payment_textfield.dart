@@ -5,9 +5,11 @@ class MyPaymentTextField extends StatefulWidget {
     super.key,
     required this.controller,
     required this.text,
+    required this.onChanged,
   });
   final TextEditingController controller;
   final String text;
+  final Function(String)? onChanged;
 
   @override
   State<MyPaymentTextField> createState() => _MyPaymentTextFieldState();
@@ -35,6 +37,7 @@ class _MyPaymentTextFieldState extends State<MyPaymentTextField> {
     return TextField(
       controller: widget.controller,
       focusNode: myFocusNode,
+      onChanged: widget.onChanged,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(

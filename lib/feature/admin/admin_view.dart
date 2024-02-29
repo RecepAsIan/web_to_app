@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:web_to_app/product/constants/color_constants.dart';
 import 'package:web_to_app/product/utility/padding.dart';
 import 'package:web_to_app/product/widgets/admin_container.dart';
-import 'package:web_to_app/product/widgets/deneme.dart';
+import 'package:web_to_app/product/widgets/liner_chart_two.dart';
 import 'package:web_to_app/product/widgets/fl_bard_chart_data.dart';
 import 'package:web_to_app/product/widgets/fl_liner_chart_data.dart';
 
@@ -20,6 +20,7 @@ class _AdminViewState extends State<AdminView> {
       appBar: AppBar(
         title: const Text('Admin'),
         backgroundColor: MyColor.adminBackground,
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Padding(

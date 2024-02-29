@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:web_to_app/product/constants/color_constants.dart';
@@ -14,12 +12,8 @@ class LineChartSample extends StatelessWidget {
         minY: 0,
         titlesData: const FlTitlesData(
           leftTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: true,
-              interval: 50,
-              reservedSize: 50
-
-            ),
+            sideTitles:
+                SideTitles(showTitles: true, interval: 50, reservedSize: 50),
           ),
           rightTitles: AxisTitles(
             sideTitles: SideTitles(showTitles: false),
